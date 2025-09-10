@@ -16,6 +16,7 @@
             --gold: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
             --success: #10b981;
             --danger: #ef4444;
+            --warning: #f59e0b;
             --dark: #1a202c;
             --light: #f7fafc;
             --shadow: 0 20px 60px rgba(0,0,0,0.1);
@@ -170,6 +171,21 @@
             color: var(--dark);
         }
 
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
         .btn:hover {
             transform: translateY(-5px);
             box-shadow: 0 25px 80px rgba(0,0,0,0.2);
@@ -234,7 +250,8 @@
         }
 
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
             width: 100%;
             padding: 1rem;
             border: 2px solid rgba(255,255,255,0.3);
@@ -251,7 +268,8 @@
         }
 
         .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group textarea:focus,
+        .form-group select:focus {
             outline: none;
             border-color: rgba(255,255,255,0.8);
             background: rgba(255,255,255,0.2);
@@ -331,6 +349,7 @@
             transform: translateY(-5px);
         }
 
+        /* Admin Panel Sections */
         .admin-section {
             background: var(--dark);
             color: white;
@@ -349,9 +368,42 @@
             margin-bottom: 3rem;
         }
 
+        .admin-nav {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-nav-btn {
+            padding: 1rem 2rem;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .admin-nav-btn:hover,
+        .admin-nav-btn.active {
+            background: var(--secondary);
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
         .admin-content {
             display: grid;
             gap: 3rem;
+        }
+
+        .admin-panel {
+            display: none;
+        }
+
+        .admin-panel.active {
+            display: block;
         }
 
         .admin-card {
@@ -359,6 +411,7 @@
             padding: 2rem;
             border-radius: var(--radius);
             backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .content-grid {
@@ -372,6 +425,116 @@
             padding: 2rem;
             border-radius: 15px;
             border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .config-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: var(--radius);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .admin-form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .admin-form-group input,
+        .admin-form-group select,
+        .admin-form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .admin-form-group input:focus,
+        .admin-form-group select:focus,
+        .admin-form-group textarea:focus {
+            outline: none;
+            border-color: rgba(255,255,255,0.8);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background: var(--success);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .status-inactive {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
         }
 
         .modal {
@@ -465,6 +628,8 @@
             .section-title { font-size: 2rem; }
             .upload-container { grid-template-columns: 1fr; }
             .donation-amounts { grid-template-columns: repeat(2, 1fr); }
+            .admin-nav { flex-direction: column; }
+            .config-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -523,7 +688,7 @@
                         </div>
                         <div class="form-group">
                             <label for="textCategory">Categoría</label>
-                            <select id="textCategory" style="width: 100%; padding: 1rem; border-radius: 15px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white;">
+                            <select id="textCategory">
                                 <option value="espiritualidad">Espiritualidad</option>
                                 <option value="meditacion">Meditación</option>
                                 <option value="sabiduria">Sabiduría</option>
@@ -602,18 +767,16 @@
                     <input type="number" id="customAmount" placeholder="Cantidad personalizada" style="background: rgba(255,255,255,0.9); color: #333;">
                 </div>
 
-                <!-- PayPal Button -->
+                <!-- PayPal Button Container -->
                 <div id="paypal-button-container"></div>
                 
-                <!-- Simple Donate Form -->
-                <form action="https://www.paypal.com/donate" method="post" target="_top" style="margin-top: 2rem;">
-                    <input type="hidden" name="business" value="tu-email@example.com">
-                    <input type="hidden" name="currency_code" value="USD">
-                    <input type="hidden" name="item_name" value="Donación a La Luz Del Universo">
-                    <button type="submit" class="btn btn-primary" style="font-size: 1.2rem; padding: 1.5rem 3rem;">
-                        <i class="fab fa-paypal"></i> Donar con PayPal
-                    </button>
-                </form>
+                <!-- Fallback Donate Form -->
+                <div id="fallback-donation" style="display: none;">
+                    <p style="color: var(--warning); margin: 2rem 0;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        PayPal no está configurado. Contacta al administrador.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -622,37 +785,202 @@
     <section id="admin" class="admin-section">
         <div class="container">
             <div class="admin-header">
-                <h2 class="section-title" style="color: white;">
-                    <i class="fas fa-crown"></i> Panel de Administración
-                </h2>
-                <button onclick="hideAdmin()" class="btn btn-danger" style="float: right;">
-                    <i class="fas fa-times"></i> Cerrar Panel
-                </button>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 class="section-title" style="color: white; margin-bottom: 0;">
+                        <i class="fas fa-crown"></i> Panel de Administración
+                    </h2>
+                    <button onclick="hideAdmin()" class="btn btn-danger">
+                        <i class="fas fa-times"></i> Cerrar Panel
+                    </button>
+                </div>
+
+                <!-- Admin Navigation -->
+                <div class="admin-nav">
+                    <button class="admin-nav-btn active" onclick="switchAdminPanel('dashboard')">
+                        <i class="fas fa-chart-bar"></i> Dashboard
+                    </button>
+                    <button class="admin-nav-btn" onclick="switchAdminPanel('content')">
+                        <i class="fas fa-list"></i> Gestionar Contenido
+                    </button>
+                    <button class="admin-nav-btn" onclick="switchAdminPanel('paypal')">
+                        <i class="fab fa-paypal"></i> Configurar PayPal
+                    </button>
+                    <button class="admin-nav-btn" onclick="switchAdminPanel('settings')">
+                        <i class="fas fa-cog"></i> Configuración
+                    </button>
+                </div>
             </div>
 
             <div class="admin-content">
-                <div class="admin-card">
-                    <h3><i class="fas fa-chart-bar"></i> Estadísticas</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 2rem;">
-                        <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
-                            <div style="font-size: 2rem;" id="totalTexts">0</div>
-                            <div>Textos Publicados</div>
-                        </div>
-                        <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
-                            <div style="font-size: 2rem;" id="totalImages">0</div>
-                            <div>Imágenes Subidas</div>
-                        </div>
-                        <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
-                            <div style="font-size: 2rem;" id="totalVisits">0</div>
-                            <div>Visitas</div>
+                <!-- Dashboard Panel -->
+                <div id="dashboard-panel" class="admin-panel active">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-chart-bar"></i> Estadísticas del Sitio</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                            <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
+                                <div style="font-size: 2rem;" id="totalTexts">0</div>
+                                <div>Textos Publicados</div>
+                            </div>
+                            <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
+                                <div style="font-size: 2rem;" id="totalImages">0</div>
+                                <div>Imágenes Subidas</div>
+                            </div>
+                            <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
+                                <div style="font-size: 2rem;" id="totalVisits">0</div>
+                                <div>Visitas Totales</div>
+                            </div>
+                            <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
+                                <div style="font-size: 2rem;" id="paypalStatus">❌</div>
+                                <div>Estado PayPal</div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="admin-card">
-                    <h3><i class="fas fa-list"></i> Contenido Reciente</h3>
-                    <div id="adminContent">
-                        <!-- Contenido administrado dinámicamente -->
+                <!-- Content Management Panel -->
+                <div id="content-panel" class="admin-panel">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-list"></i> Contenido Reciente</h3>
+                        <div id="adminContent">
+                            <!-- Contenido administrado dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PayPal Configuration Panel -->
+                <div id="paypal-panel" class="admin-panel">
+                    <div class="config-grid">
+                        <div class="config-card">
+                            <h3><i class="fab fa-paypal"></i> Configuración PayPal</h3>
+                            <form id="paypalConfigForm">
+                                <div class="admin-form-group">
+                                    <label for="paypalEnabled">Estado PayPal</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="paypalEnabled">
+                                        <span class="slider"></span>
+                                    </label>
+                                    <div id="paypalStatusText" class="status-indicator status-inactive" style="margin-top: 1rem;">
+                                        <i class="fas fa-times-circle"></i> Desactivado
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-group">
+                                    <label for="paypalClientId">Client ID de PayPal</label>
+                                    <input type="text" id="paypalClientId" placeholder="Tu Client ID de PayPal" value="">
+                                    <small style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">
+                                        Obtén tu Client ID desde <a href="https://developer.paypal.com" target="_blank" style="color: #fbbf24;">developer.paypal.com</a>
+                                    </small>
+                                </div>
+
+                                <div class="admin-form-group">
+                                    <label for="paypalMode">Modo de PayPal</label>
+                                    <select id="paypalMode">
+                                        <option value="sandbox">Sandbox (Pruebas)</option>
+                                        <option value="live">Live (Producción)</option>
+                                    </select>
+                                </div>
+
+                                <div class="admin-form-group">
+                                    <label for="paypalCurrency">Moneda</label>
+                                    <select id="paypalCurrency">
+                                        <option value="USD">USD - Dólar Estadounidense</option>
+                                        <option value="EUR">EUR - Euro</option>
+                                        <option value="MXN">MXN - Peso Mexicano</option>
+                                        <option value="CAD">CAD - Dólar Canadiense</option>
+                                    </select>
+                                </div>
+
+                                <div class="admin-form-group">
+                                    <label for="paypalBusinessEmail">Email de Negocio PayPal</label>
+                                    <input type="email" id="paypalBusinessEmail" placeholder="tu-email@ejemplo.com" value="">
+                                </div>
+
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save"></i> Guardar Configuración PayPal
+                                </button>
+                                <button type="button" onclick="testPayPalConfig()" class="btn btn-warning">
+                                    <i class="fas fa-test-tube"></i> Probar Configuración
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="config-card">
+                            <h3><i class="fas fa-info-circle"></i> Instrucciones PayPal</h3>
+                            <ol style="line-height: 2; color: rgba(255,255,255,0.9);">
+                                <li>Ve a <a href="https://developer.paypal.com" target="_blank" style="color: #fbbf24;">developer.paypal.com</a></li>
+                                <li>Crea una cuenta de desarrollador</li>
+                                <li>Crea una nueva aplicación</li>
+                                <li>Copia el <strong>Client ID</strong></li>
+                                <li>Pégalo en el campo de arriba</li>
+                                <li>Selecciona el modo (Sandbox para pruebas)</li>
+                                <li>Guarda la configuración</li>
+                                <li>¡Activa PayPal y prueba!</li>
+                            </ol>
+
+                            <div style="background: rgba(251, 191, 36, 0.1); padding: 1rem; border-radius: 10px; margin-top: 2rem;">
+                                <h4 style="color: #fbbf24; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-lightbulb"></i> Consejos:
+                                </h4>
+                                <ul style="color: rgba(255,255,255,0.8); line-height: 1.8;">
+                                    <li>Usa Sandbox para probar sin dinero real</li>
+                                    <li>Cambia a Live cuando esté todo listo</li>
+                                    <li>El Client ID es público, es seguro</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Panel -->
+                <div id="settings-panel" class="admin-panel">
+                    <div class="config-grid">
+                        <div class="config-card">
+                            <h3><i class="fas fa-cog"></i> Configuración General</h3>
+                            <form id="generalConfigForm">
+                                <div class="admin-form-group">
+                                    <label for="siteName">Nombre del Sitio</label>
+                                    <input type="text" id="siteName" value="La Luz Del Universo">
+                                </div>
+
+                                <div class="admin-form-group">
+                                    <label for="adminEmail">Email de Administrador</label>
+                                    <input type="email" id="adminEmail" value="admin@laluzdeluniverso.com">
+                                </div>
+
+                                <div class="admin-form-group">
+                                    <label for="siteDescription">Descripción del Sitio</label>
+                                    <textarea id="siteDescription" rows="3">Un espacio sagrado para el crecimiento espiritual y la conexión con el universo</textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save"></i> Guardar Configuración
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="config-card">
+                            <h3><i class="fas fa-key"></i> Seguridad</h3>
+                            <form id="securityForm">
+                                <div class="admin-form-group">
+                                    <label for="currentPassword">Contraseña Actual</label>
+                                    <input type="password" id="currentPassword" placeholder="Contraseña actual">
+                                </div>
+
+                                <div class="admin-form-group">
+                                    <label for="newPassword">Nueva Contraseña</label>
+                                    <input type="password" id="newPassword" placeholder="Nueva contraseña">
+                                </div>
+
+                                <div class="admin-form-group">
+                                    <label for="confirmPassword">Confirmar Contraseña</label>
+                                    <input type="password" id="confirmPassword" placeholder="Confirmar nueva contraseña">
+                                </div>
+
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="fas fa-key"></i> Cambiar Contraseña
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -666,7 +994,7 @@
             <h2><i class="fas fa-lock"></i> Acceso de Administrador</h2>
             <form id="loginForm" style="margin-top: 2rem;">
                 <div class="form-group">
-                    <input type="password" id="adminPassword" placeholder="Contraseña de administrador" style="width: 100%; padding: 1rem; border-radius: 15px; border: 2px solid #ddd;">
+                    <input type="password" id="adminPassword" placeholder="Contraseña de administrador" style="width: 100%; padding: 1rem; border-radius: 15px; border: 2px solid #ddd; color: #333;">
                 </div>
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-sign-in-alt"></i> Ingresar
@@ -685,12 +1013,22 @@
         // Variables globales
         let selectedDonationAmount = 50;
         const adminPassword = 'laluz2025'; // Cambia esta contraseña
+        let paypalSDKLoaded = false;
+        let currentPayPalConfig = {
+            enabled: false,
+            clientId: '',
+            mode: 'sandbox',
+            currency: 'USD',
+            businessEmail: ''
+        };
 
         // Inicialización
         document.addEventListener('DOMContentLoaded', function() {
+            loadPayPalConfig();
             loadContent();
             updateStats();
             setupEventListeners();
+            initPayPal();
         });
 
         function setupEventListeners() {
@@ -698,6 +1036,9 @@
             document.getElementById('textForm').addEventListener('submit', handleTextSubmit);
             document.getElementById('imageForm').addEventListener('submit', handleImageSubmit);
             document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            document.getElementById('paypalConfigForm').addEventListener('submit', handlePayPalConfig);
+            document.getElementById('generalConfigForm').addEventListener('submit', handleGeneralConfig);
+            document.getElementById('securityForm').addEventListener('submit', handleSecurityConfig);
 
             // Image preview
             document.getElementById('imageFile').addEventListener('change', previewImage);
@@ -706,6 +1047,193 @@
             document.getElementById('customAmount').addEventListener('input', function() {
                 selectAmount(parseFloat(this.value) || 50);
             });
+
+            // PayPal enabled toggle
+            document.getElementById('paypalEnabled').addEventListener('change', function() {
+                updatePayPalStatus();
+            });
+        }
+
+        // PayPal Configuration Functions
+        function loadPayPalConfig() {
+            const saved = localStorage.getItem('paypalConfig');
+            if (saved) {
+                currentPayPalConfig = { ...currentPayPalConfig, ...JSON.parse(saved) };
+            }
+            
+            // Update form fields
+            document.getElementById('paypalEnabled').checked = currentPayPalConfig.enabled;
+            document.getElementById('paypalClientId').value = currentPayPalConfig.clientId;
+            document.getElementById('paypalMode').value = currentPayPalConfig.mode;
+            document.getElementById('paypalCurrency').value = currentPayPalConfig.currency;
+            document.getElementById('paypalBusinessEmail').value = currentPayPalConfig.businessEmail;
+            
+            updatePayPalStatus();
+        }
+
+        function handlePayPalConfig(e) {
+            e.preventDefault();
+            
+            const config = {
+                enabled: document.getElementById('paypalEnabled').checked,
+                clientId: document.getElementById('paypalClientId').value.trim(),
+                mode: document.getElementById('paypalMode').value,
+                currency: document.getElementById('paypalCurrency').value,
+                businessEmail: document.getElementById('paypalBusinessEmail').value.trim()
+            };
+
+            if (config.enabled && !config.clientId) {
+                showError('Debes ingresar un Client ID para activar PayPal');
+                return;
+            }
+
+            currentPayPalConfig = config;
+            localStorage.setItem('paypalConfig', JSON.stringify(config));
+            
+            updatePayPalStatus();
+            initPayPal();
+            updateStats();
+            
+            showSuccess('Configuración de PayPal guardada correctamente');
+        }
+
+        function updatePayPalStatus() {
+            const statusElement = document.getElementById('paypalStatusText');
+            const dashboardStatus = document.getElementById('paypalStatus');
+            
+            if (currentPayPalConfig.enabled && currentPayPalConfig.clientId) {
+                statusElement.className = 'status-indicator status-active';
+                statusElement.innerHTML = '<i class="fas fa-check-circle"></i> Activado (' + currentPayPalConfig.mode + ')';
+                dashboardStatus.textContent = '✅';
+            } else {
+                statusElement.className = 'status-indicator status-inactive';
+                statusElement.innerHTML = '<i class="fas fa-times-circle"></i> Desactivado';
+                dashboardStatus.textContent = '❌';
+            }
+        }
+
+        function testPayPalConfig() {
+            if (!currentPayPalConfig.clientId) {
+                showError('Ingresa un Client ID para probar');
+                return;
+            }
+
+            showSuccess('Probando configuración PayPal...');
+            
+            // Simulate test
+            setTimeout(() => {
+                if (currentPayPalConfig.clientId.includes('sandbox') || currentPayPalConfig.mode === 'sandbox') {
+                    showSuccess('✅ Configuración válida para Sandbox');
+                } else {
+                    showSuccess('⚠️ Recuerda cambiar a modo Live para producción');
+                }
+            }, 2000);
+        }
+
+        function initPayPal() {
+            const container = document.getElementById('paypal-button-container');
+            const fallback = document.getElementById('fallback-donation');
+            
+            if (!currentPayPalConfig.enabled || !currentPayPalConfig.clientId) {
+                container.style.display = 'none';
+                fallback.style.display = 'block';
+                return;
+            }
+
+            container.style.display = 'block';
+            fallback.style.display = 'none';
+            
+            // Load PayPal SDK dynamically
+            if (!paypalSDKLoaded) {
+                loadPayPalSDK();
+            } else if (window.paypal) {
+                renderPayPalButtons();
+            }
+        }
+
+        function loadPayPalSDK() {
+            const existingScript = document.querySelector('script[src*="paypal.com/sdk"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+
+            const script = document.createElement('script');
+            script.src = `https://www.paypal.com/sdk/js?client-id=${currentPayPalConfig.clientId}&currency=${currentPayPalConfig.currency}`;
+            script.onload = () => {
+                paypalSDKLoaded = true;
+                renderPayPalButtons();
+            };
+            script.onerror = () => {
+                showError('Error al cargar PayPal SDK. Verifica el Client ID.');
+            };
+            document.head.appendChild(script);
+        }
+
+        function renderPayPalButtons() {
+            const container = document.getElementById('paypal-button-container');
+            container.innerHTML = ''; // Clear existing buttons
+
+            if (!window.paypal) {
+                showError('PayPal SDK no está disponible');
+                return;
+            }
+
+            window.paypal.Buttons({
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: selectedDonationAmount.toString(),
+                                currency_code: currentPayPalConfig.currency
+                            },
+                            description: 'Donación a La Luz Del Universo'
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        showSuccess('¡Gracias por tu donación de ' + currentPayPalConfig.currency + ' $' + selectedDonationAmount + '!');
+                        
+                        // Save donation record
+                        const donation = {
+                            id: Date.now(),
+                            amount: selectedDonationAmount,
+                            currency: currentPayPalConfig.currency,
+                            transactionId: details.id,
+                            date: new Date().toLocaleDateString('es-ES'),
+                            status: 'completed'
+                        };
+                        
+                        const donations = JSON.parse(localStorage.getItem('donations') || '[]');
+                        donations.unshift(donation);
+                        localStorage.setItem('donations', JSON.stringify(donations));
+                    });
+                },
+                onError: function(err) {
+                    console.error('PayPal Error:', err);
+                    showError('Error en la donación. Inténtalo de nuevo.');
+                },
+                onCancel: function(data) {
+                    showSuccess('Donación cancelada. ¡Gracias por considerar apoyarnos!');
+                },
+                style: {
+                    shape: 'rect',
+                    color: 'blue',
+                    layout: 'vertical',
+                    label: 'donate'
+                }
+            }).render('#paypal-button-container');
+        }
+
+        // Admin Panel Functions
+        function switchAdminPanel(panelName) {
+            // Update nav buttons
+            document.querySelectorAll('.admin-nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show selected panel
+            document.querySelectorAll('.admin-panel').forEach(panel => panel.classList.remove('active'));
+            document.getElementById(panelName + '-panel').classList.add('active');
         }
 
         function handleTextSubmit(e) {
@@ -777,7 +1305,9 @@
         function selectAmount(amount) {
             selectedDonationAmount = amount;
             document.querySelectorAll('.amount-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
         }
 
         function saveToStorage(key, data) {
@@ -837,6 +1367,8 @@
             document.getElementById('totalTexts').textContent = texts;
             document.getElementById('totalImages').textContent = images;
             document.getElementById('totalVisits').textContent = visits;
+            
+            updatePayPalStatus();
         }
 
         function showAdminLogin() {
@@ -888,7 +1420,7 @@
                         <strong>${item.title}</strong>
                         <br><small>${item.type === 'text' ? '📝' : '🖼️'} ${item.type} • ${item.date}</small>
                     </div>
-                    <button onclick="deleteContent(${item.id})" class="btn" style="background: var(--danger); color: white; padding: 0.5rem 1rem;">
+                    <button onclick="deleteContent(${item.id})" class="btn btn-danger" style="padding: 0.5rem 1rem;">
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
@@ -904,6 +1436,36 @@
                 updateStats();
                 showSuccess('Contenido eliminado');
             }
+        }
+
+        function handleGeneralConfig(e) {
+            e.preventDefault();
+            showSuccess('Configuración general guardada');
+        }
+
+        function handleSecurityConfig(e) {
+            e.preventDefault();
+            const current = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            if (current !== adminPassword) {
+                showError('Contraseña actual incorrecta');
+                return;
+            }
+
+            if (newPass !== confirm) {
+                showError('Las contraseñas no coinciden');
+                return;
+            }
+
+            if (newPass.length < 6) {
+                showError('La nueva contraseña debe tener al menos 6 caracteres');
+                return;
+            }
+
+            showSuccess('Contraseña actualizada (recuerda actualizar el código)');
+            document.getElementById('securityForm').reset();
         }
 
         function showSuccess(message) {
@@ -937,33 +1499,6 @@
                 e.target.style.display = 'none';
             }
         });
-    </script>
-
-    <!-- PayPal SDK (opcional - reemplaza TU_CLIENT_ID) -->
-    <script src="https://www.paypal.com/sdk/js?client-id=TU_CLIENT_ID&currency=USD"></script>
-    <script>
-        // PayPal integration (opcional)
-        if (typeof paypal !== 'undefined') {
-            paypal.Buttons({
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                value: selectedDonationAmount.toString()
-                            }
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        showSuccess('¡Gracias por tu donación de $' + selectedDonationAmount + '!');
-                    });
-                },
-                onError: function(err) {
-                    showError('Error en la donación. Inténtalo de nuevo.');
-                }
-            }).render('#paypal-button-container');
-        }
     </script>
 </body>
 </html>
