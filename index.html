@@ -367,6 +367,29 @@
             transform: translateY(-5px);
         }
 
+        /* PayPal Button Styling */
+        .paypal-button {
+            background: #0070ba;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .paypal-button:hover {
+            background: #005ea6;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 112, 186, 0.3);
+        }
+
         /* Admin Panel Sections */
         .admin-section {
             background: var(--dark);
@@ -431,19 +454,6 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,0.1);
             margin-bottom: 2rem;
-        }
-
-        .content-grid {
-            display: grid;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .content-item {
-            background: rgba(255,255,255,0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .config-grid {
@@ -756,14 +766,10 @@
                     <input type="number" id="customAmount" placeholder="Cantidad personalizada" style="background: rgba(255,255,255,0.9); color: #333;">
                 </div>
 
-                <!-- PayPal Button Container -->
-                <div id="paypal-button-container"></div>
-                
-                <!-- Fallback Donate Form -->
-                <div id="fallback-donation" style="display: none;">
-                    <p style="color: var(--warning); margin: 2rem 0;">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        PayPal no está configurado. Contacta al administrador.
+                <!-- PayPal Simple Button -->
+                <div id="paypal-donate-container">
+                    <p style="margin: 1rem 0; font-size: 0.9rem; opacity: 0.8;">
+                        PayPal no está configurado. Ve al panel de administración para agregar tu email de PayPal.
                     </p>
                 </div>
             </div>
@@ -840,7 +846,7 @@
                 <div id="paypal-panel" class="admin-panel">
                     <div class="config-grid">
                         <div class="admin-card">
-                            <h3><i class="fab fa-paypal"></i> Configuración PayPal</h3>
+                            <h3><i class="fab fa-paypal"></i> Configuración PayPal Simple</h3>
                             <form id="paypalConfigForm">
                                 <div class="admin-form-group">
                                     <label for="paypalEnabled">Estado PayPal</label>
@@ -854,19 +860,11 @@
                                 </div>
 
                                 <div class="admin-form-group">
-                                    <label for="paypalClientId">Client ID de PayPal</label>
-                                    <input type="text" id="paypalClientId" placeholder="Tu Client ID de PayPal">
+                                    <label for="paypalEmail">Email de PayPal</label>
+                                    <input type="email" id="paypalEmail" placeholder="tu-email@paypal.com">
                                     <small style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">
-                                        Obtén tu Client ID desde <a href="https://developer.paypal.com" target="_blank" style="color: #fbbf24;">developer.paypal.com</a>
+                                        Ingresa el email de tu cuenta PayPal para recibir donaciones
                                     </small>
-                                </div>
-
-                                <div class="admin-form-group">
-                                    <label for="paypalMode">Modo de PayPal</label>
-                                    <select id="paypalMode">
-                                        <option value="sandbox">Sandbox (Pruebas)</option>
-                                        <option value="live">Live (Producción)</option>
-                                    </select>
                                 </div>
 
                                 <div class="admin-form-group">
@@ -879,6 +877,11 @@
                                     </select>
                                 </div>
 
+                                <div class="admin-form-group">
+                                    <label for="donationPurpose">Propósito de la Donación</label>
+                                    <input type="text" id="donationPurpose" placeholder="Apoya La Luz Del Universo" value="Apoya La Luz Del Universo">
+                                </div>
+
                                 <button type="submit" class="btn btn-success">
                                     <i class="fas fa-save"></i> Guardar Configuración PayPal
                                 </button>
@@ -889,17 +892,28 @@
                         </div>
 
                         <div class="admin-card">
-                            <h3><i class="fas fa-info-circle"></i> Instrucciones PayPal</h3>
-                            <ol style="line-height: 2; color: rgba(255,255,255,0.9);">
-                                <li>Ve a <a href="https://developer.paypal.com" target="_blank" style="color: #fbbf24;">developer.paypal.com</a></li>
-                                <li>Crea una cuenta de desarrollador</li>
-                                <li>Crea una nueva aplicación</li>
-                                <li>Copia el <strong>Client ID</strong></li>
-                                <li>Pégalo en el campo de arriba</li>
-                                <li>Selecciona el modo (Sandbox para pruebas)</li>
-                                <li>Guarda la configuración</li>
-                                <li>¡Activa PayPal y prueba!</li>
-                            </ol>
+                            <h3><i class="fas fa-info-circle"></i> Instrucciones PayPal Simple</h3>
+                            <div style="line-height: 2; color: rgba(255,255,255,0.9);">
+                                <h4 style="color: #fbbf24; margin-bottom: 1rem;">Para usar PayPal solo con tu email:</h4>
+                                <ol>
+                                    <li>Ingresa tu email de PayPal arriba</li>
+                                    <li>Selecciona la moneda que prefieras</li>
+                                    <li>Escribe el propósito de la donación</li>
+                                    <li>Activa el toggle de PayPal</li>
+                                    <li>Guarda la configuración</li>
+                                    <li>¡Los visitantes podrán donar directamente!</li>
+                                </ol>
+                                
+                                <div style="background: rgba(251, 191, 36, 0.1); padding: 1rem; border-radius: 10px; margin-top: 2rem;">
+                                    <h4 style="color: #fbbf24; margin-bottom: 0.5rem;">
+                                        <i class="fas fa-lightbulb"></i> Nota Importante:
+                                    </h4>
+                                    <p style="color: rgba(255,255,255,0.8); margin: 0;">
+                                        Este método usa el sistema de botones estándar de PayPal que no requiere Client ID.
+                                        Los donantes serán redirigidos a PayPal para completar la donación de forma segura.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -986,12 +1000,11 @@
         // Variables globales
         let selectedDonationAmount = 50;
         const adminPassword = 'laluz2025'; // Cambia esta contraseña
-        let paypalSDKLoaded = false;
         let currentPayPalConfig = {
             enabled: false,
-            clientId: '',
-            mode: 'sandbox',
-            currency: 'USD'
+            email: '',
+            currency: 'USD',
+            purpose: 'Apoya La Luz Del Universo'
         };
 
         // Inicialización
@@ -1000,7 +1013,7 @@
             loadContent();
             updateStats();
             setupEventListeners();
-            initPayPal();
+            updatePayPalButton();
         });
 
         function setupEventListeners() {
@@ -1023,6 +1036,7 @@
             // PayPal enabled toggle
             document.getElementById('paypalEnabled').addEventListener('change', function() {
                 updatePayPalStatus();
+                updatePayPalButton();
             });
         }
 
@@ -1035,9 +1049,9 @@
             
             // Update form fields
             document.getElementById('paypalEnabled').checked = currentPayPalConfig.enabled;
-            document.getElementById('paypalClientId').value = currentPayPalConfig.clientId;
-            document.getElementById('paypalMode').value = currentPayPalConfig.mode;
+            document.getElementById('paypalEmail').value = currentPayPalConfig.email;
             document.getElementById('paypalCurrency').value = currentPayPalConfig.currency;
+            document.getElementById('donationPurpose').value = currentPayPalConfig.purpose;
             
             updatePayPalStatus();
         }
@@ -1047,13 +1061,18 @@
             
             const config = {
                 enabled: document.getElementById('paypalEnabled').checked,
-                clientId: document.getElementById('paypalClientId').value.trim(),
-                mode: document.getElementById('paypalMode').value,
-                currency: document.getElementById('paypalCurrency').value
+                email: document.getElementById('paypalEmail').value.trim(),
+                currency: document.getElementById('paypalCurrency').value,
+                purpose: document.getElementById('donationPurpose').value.trim()
             };
 
-            if (config.enabled && !config.clientId) {
-                showError('Debes ingresar un Client ID para activar PayPal');
+            if (config.enabled && !config.email) {
+                showError('Debes ingresar un email de PayPal para activar las donaciones');
+                return;
+            }
+
+            if (config.email && !isValidEmail(config.email)) {
+                showError('Por favor ingresa un email válido');
                 return;
             }
 
@@ -1061,20 +1080,24 @@
             localStorage.setItem('paypalConfig', JSON.stringify(config));
             
             updatePayPalStatus();
-            initPayPal();
+            updatePayPalButton();
             updateStats();
             
             showSuccess('Configuración de PayPal guardada correctamente');
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
 
         function updatePayPalStatus() {
             const statusElement = document.getElementById('paypalStatusText');
             const dashboardStatus = document.getElementById('paypalStatus');
             
-            if (currentPayPalConfig.enabled && currentPayPalConfig.clientId) {
+            if (currentPayPalConfig.enabled && currentPayPalConfig.email) {
                 statusElement.style.background = 'rgba(16, 185, 129, 0.2)';
                 statusElement.style.color = 'var(--success)';
-                statusElement.innerHTML = '<i class="fas fa-check-circle"></i> Activado (' + currentPayPalConfig.mode + ')';
+                statusElement.innerHTML = '<i class="fas fa-check-circle"></i> Activado (' + currentPayPalConfig.email + ')';
                 dashboardStatus.textContent = '✅';
             } else {
                 statusElement.style.background = 'rgba(239, 68, 68, 0.2)';
@@ -1084,117 +1107,38 @@
             }
         }
 
+        function updatePayPalButton() {
+            const container = document.getElementById('paypal-donate-container');
+            
+            if (!currentPayPalConfig.enabled || !currentPayPalConfig.email) {
+                container.innerHTML = `
+                    <p style="margin: 1rem 0; font-size: 0.9rem; opacity: 0.8;">
+                        PayPal no está configurado. Ve al panel de administración para agregar tu email de PayPal.
+                    </p>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <form action="https://www.paypal.com/donate" method="post" target="_top" style="margin-top: 1rem;">
+                    <input type="hidden" name="business" value="${currentPayPalConfig.email}">
+                    <input type="hidden" name="currency_code" value="${currentPayPalConfig.currency}">
+                    <input type="hidden" name="item_name" value="${currentPayPalConfig.purpose}">
+                    <input type="hidden" name="amount" id="paypal-amount" value="${selectedDonationAmount}">
+                    <button type="submit" class="paypal-button">
+                        <i class="fab fa-paypal"></i> Donar $${selectedDonationAmount} ${currentPayPalConfig.currency} con PayPal
+                    </button>
+                </form>
+            `;
+        }
+
         function testPayPalConfig() {
-            if (!currentPayPalConfig.clientId) {
-                showError('Ingresa un Client ID para probar');
+            if (!currentPayPalConfig.email) {
+                showError('Ingresa un email de PayPal para probar');
                 return;
             }
 
-            showSuccess('Probando configuración PayPal...');
-            
-            // Simulate test
-            setTimeout(() => {
-                if (currentPayPalConfig.clientId.includes('sandbox') || currentPayPalConfig.mode === 'sandbox') {
-                    showSuccess('✅ Configuración válida para Sandbox');
-                } else {
-                    showSuccess('⚠️ Recuerda cambiar a modo Live para producción');
-                }
-            }, 2000);
-        }
-
-        function initPayPal() {
-            const container = document.getElementById('paypal-button-container');
-            const fallback = document.getElementById('fallback-donation');
-            
-            if (!currentPayPalConfig.enabled || !currentPayPalConfig.clientId) {
-                container.style.display = 'none';
-                fallback.style.display = 'block';
-                return;
-            }
-
-            container.style.display = 'block';
-            fallback.style.display = 'none';
-            
-            // Load PayPal SDK dynamically
-            if (!paypalSDKLoaded) {
-                loadPayPalSDK();
-            } else if (window.paypal) {
-                renderPayPalButtons();
-            }
-        }
-
-        function loadPayPalSDK() {
-            const existingScript = document.querySelector('script[src*="paypal.com/sdk"]');
-            if (existingScript) {
-                existingScript.remove();
-            }
-
-            const script = document.createElement('script');
-            script.src = `https://www.paypal.com/sdk/js?client-id=${currentPayPalConfig.clientId}&currency=${currentPayPalConfig.currency}`;
-            script.onload = () => {
-                paypalSDKLoaded = true;
-                renderPayPalButtons();
-            };
-            script.onerror = () => {
-                showError('Error al cargar PayPal SDK. Verifica el Client ID.');
-            };
-            document.head.appendChild(script);
-        }
-
-        function renderPayPalButtons() {
-            const container = document.getElementById('paypal-button-container');
-            container.innerHTML = ''; // Clear existing buttons
-
-            if (!window.paypal) {
-                showError('PayPal SDK no está disponible');
-                return;
-            }
-
-            window.paypal.Buttons({
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                value: selectedDonationAmount.toString(),
-                                currency_code: currentPayPalConfig.currency
-                            },
-                            description: 'Donación a La Luz Del Universo'
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        showSuccess('¡Gracias por tu donación de ' + currentPayPalConfig.currency + ' $' + selectedDonationAmount + '!');
-                        
-                        // Save donation record
-                        const donation = {
-                            id: Date.now(),
-                            amount: selectedDonationAmount,
-                            currency: currentPayPalConfig.currency,
-                            transactionId: details.id,
-                            date: new Date().toLocaleDateString('es-ES'),
-                            status: 'completed'
-                        };
-                        
-                        const donations = JSON.parse(localStorage.getItem('donations') || '[]');
-                        donations.unshift(donation);
-                        localStorage.setItem('donations', JSON.stringify(donations));
-                    });
-                },
-                onError: function(err) {
-                    console.error('PayPal Error:', err);
-                    showError('Error en la donación. Inténtalo de nuevo.');
-                },
-                onCancel: function(data) {
-                    showSuccess('Donación cancelada. ¡Gracias por considerar apoyarnos!');
-                },
-                style: {
-                    shape: 'rect',
-                    color: 'blue',
-                    layout: 'vertical',
-                    label: 'donate'
-                }
-            }).render('#paypal-button-container');
+            showSuccess('✅ Configuración válida. Los usuarios pueden donar a ' + currentPayPalConfig.email);
         }
 
         // Admin Panel Functions
@@ -1280,6 +1224,9 @@
             if (event && event.target) {
                 event.target.classList.add('active');
             }
+            
+            // Update PayPal button amount
+            updatePayPalButton();
         }
 
         function saveToStorage(key, data) {
