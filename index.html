@@ -226,6 +226,7 @@
             border-radius: var(--radius);
             border: 1px solid rgba(255,255,255,0.2);
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .content-item:hover {
@@ -241,6 +242,7 @@
         .content-item p {
             font-size: 1.1rem;
             line-height: 1.8;
+            margin-bottom: 1.5rem;
         }
 
         /* Gallery Section para textos con imágenes */
@@ -269,6 +271,7 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,0.2);
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .gallery-item:hover {
@@ -295,6 +298,129 @@
         .gallery-item p {
             font-size: 1rem;
             line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Post Actions (Like, Share, Comment) */
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .action-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .action-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .action-btn.liked {
+            color: #ff6b6b;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: var(--dark);
+        }
+
+        .comments-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .comment-form {
+            background: rgba(255,255,255,0.9);
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-family: inherit;
+        }
+
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .comments-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .comment {
+            background: rgba(255,255,255,0.9);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .comment-date {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .comment-text {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .comment-actions button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .comment-actions button:hover {
+            background: rgba(0,0,0,0.1);
         }
 
         /* Donations Section */
@@ -377,7 +503,7 @@
 
         .admin-nav {
             display: flex;
-            gap: 2rem;
+            gap: 1rem;
             margin-top: 2rem;
             flex-wrap: wrap;
         }
@@ -443,6 +569,29 @@
             background: rgba(255,255,255,0.1);
             color: white;
             font-size: 1rem;
+        }
+
+        .upload-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .upload-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .file-preview {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .file-preview img {
+            max-width: 200px;
+            border-radius: 10px;
         }
 
         .toggle-switch {
@@ -578,6 +727,8 @@
             .content-grid { grid-template-columns: 1fr; }
             .gallery { grid-template-columns: 1fr; }
             .donation-amounts { grid-template-columns: repeat(2, 1fr); }
+            .admin-nav { flex-direction: column; }
+            .upload-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -594,6 +745,7 @@
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#textos">Textos</a></li>
                 <li><a href="#galeria">Galería</a></li>
+                <li><a href="#comentarios">Comentarios</a></li>
                 <li><a href="#donaciones">Donaciones</a></li>
                 <li><a href="#" onclick="showAdminLogin()"><i class="fas fa-lock"></i></a></li>
             </ul>
@@ -622,34 +774,118 @@
             </h2>
             
             <div class="content-grid">
-                <div class="content-item">
+                <div class="content-item" data-post-id="1">
                     <h3>🌟 Viaje Estelar</h3>
                     <p>Cada estrella en el cielo es un recordatorio de nuestro viaje espiritual: nacimiento, muerte y renacimiento constante.</p>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(1)">
+                            <i class="fas fa-heart"></i>
+                            <span id="likes-1">0</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(1)">
+                            <i class="fas fa-share"></i>
+                            Compartir
+                        </button>
+                        <button class="action-btn" onclick="scrollToComments()">
+                            <i class="fas fa-comment"></i>
+                            Comentar
+                        </button>
+                    </div>
                 </div>
 
-                <div class="content-item">
+                <div class="content-item" data-post-id="2">
                     <h3>✨ Sabiduría Interior</h3>
                     <p>Despertar espiritualmente es reconocer que dentro de nosotros reside la sabiduría del cosmos entero.</p>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(2)">
+                            <i class="fas fa-heart"></i>
+                            <span id="likes-2">0</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(2)">
+                            <i class="fas fa-share"></i>
+                            Compartir
+                        </button>
+                        <button class="action-btn" onclick="scrollToComments()">
+                            <i class="fas fa-comment"></i>
+                            Comentar
+                        </button>
+                    </div>
                 </div>
 
-                <div class="content-item">
+                <div class="content-item" data-post-id="3">
                     <h3>🕊️ Libertad del Alma</h3>
                     <p>Obedecer los dictados del alma nos conduce hacia la paz, la claridad y la verdadera libertad interior.</p>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(3)">
+                            <i class="fas fa-heart"></i>
+                            <span id="likes-3">0</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(3)">
+                            <i class="fas fa-share"></i>
+                            Compartir
+                        </button>
+                        <button class="action-btn" onclick="scrollToComments()">
+                            <i class="fas fa-comment"></i>
+                            Comentar
+                        </button>
+                    </div>
                 </div>
 
-                <div class="content-item">
+                <div class="content-item" data-post-id="4">
                     <h3>💫 Lenguaje Cósmico</h3>
                     <p>Los códigos de luz y obediencia son el lenguaje secreto con el que el universo se comunica con quienes están listos para escuchar.</p>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(4)">
+                            <i class="fas fa-heart"></i>
+                            <span id="likes-4">0</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(4)">
+                            <i class="fas fa-share"></i>
+                            Compartir
+                        </button>
+                        <button class="action-btn" onclick="scrollToComments()">
+                            <i class="fas fa-comment"></i>
+                            Comentar
+                        </button>
+                    </div>
                 </div>
 
-                <div class="content-item">
+                <div class="content-item" data-post-id="5">
                     <h3>⚡ Alineación Divina</h3>
                     <p>El despertar es el proceso de alinear nuestra voluntad con la voluntad divina que rige el universo infinito.</p>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(5)">
+                            <i class="fas fa-heart"></i>
+                            <span id="likes-5">0</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(5)">
+                            <i class="fas fa-share"></i>
+                            Compartir
+                        </button>
+                        <button class="action-btn" onclick="scrollToComments()">
+                            <i class="fas fa-comment"></i>
+                            Comentar
+                        </button>
+                    </div>
                 </div>
 
-                <div class="content-item">
+                <div class="content-item" data-post-id="6">
                     <h3>🗝️ Llaves Sagradas</h3>
                     <p>Los códigos de obediencia son las llaves sagradas que abren las puertas del despertar y la expansión de la consciencia.</p>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(6)">
+                            <i class="fas fa-heart"></i>
+                            <span id="likes-6">0</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(6)">
+                            <i class="fas fa-share"></i>
+                            Compartir
+                        </button>
+                        <button class="action-btn" onclick="scrollToComments()">
+                            <i class="fas fa-comment"></i>
+                            Comentar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -663,35 +899,122 @@
             </h2>
             
             <div class="gallery">
-                <div class="gallery-item">
+                <div class="gallery-item" data-post-id="7">
                     <img src="https://pplx-res.cloudinary.com/image/upload/v1757553394/gemini_images/sucfsvhhifnvh96dnils.png" alt="El Reflejo Cósmico">
                     <div class="gallery-item-content">
                         <h4>🌌 El Reflejo Cósmico</h4>
                         <p>El universo es un reflejo de nuestra alma; cuando despertamos a nuestra verdadera esencia, nos damos cuenta de que somos parte del todo.</p>
+                        <div class="post-actions">
+                            <button class="action-btn" onclick="toggleLike(7)">
+                                <i class="fas fa-heart"></i>
+                                <span id="likes-7">0</span>
+                            </button>
+                            <button class="action-btn" onclick="sharePost(7)">
+                                <i class="fas fa-share"></i>
+                                Compartir
+                            </button>
+                            <button class="action-btn" onclick="scrollToComments()">
+                                <i class="fas fa-comment"></i>
+                                Comentar
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="gallery-item">
+                <div class="gallery-item" data-post-id="8">
                     <img src="https://pplx-res.cloudinary.com/image/upload/v1757553403/gemini_images/jpjxygwrnjh38i1kjjh7.png" alt="La Danza Espiritual">
                     <div class="gallery-item-content">
                         <h4>💃 La Danza Espiritual</h4>
                         <p>La obediencia espiritual no es un acto de sumisión ciega, sino una danza con las leyes universales que despiertan nuestra luz interior.</p>
+                        <div class="post-actions">
+                            <button class="action-btn" onclick="toggleLike(8)">
+                                <i class="fas fa-heart"></i>
+                                <span id="likes-8">0</span>
+                            </button>
+                            <button class="action-btn" onclick="sharePost(8)">
+                                <i class="fas fa-share"></i>
+                                Compartir
+                            </button>
+                            <button class="action-btn" onclick="scrollToComments()">
+                                <i class="fas fa-comment"></i>
+                                Comentar
+                            </button>
+                        </div>
                     </div>
-                </div>```
-                <div class="gallery-item">
+                </div>
+
+                <div class="gallery-item" data-post-id="9">
                     <img src="https://pplx-res.cloudinary.com/image/upload/v1757553413/gemini_images/tfp7dpl7bvipwhfu2rc2.png" alt="Energía Eterna">
                     <div class="gallery-item-content">
                         <h4>⚡ Energía Eterna</h4>
                         <p>El despertar es recordar que somos energía eterna, conectados con la consciencia infinita del cosmos.</p>
+                        <div class="post-actions">
+                            <button class="action-btn" onclick="toggleLike(9)">
+                                <i class="fas fa-heart"></i>
+                                <span id="likes-9">0</span>
+                            </button>
+                            <button class="action-btn" onclick="sharePost(9)">
+                                <i class="fas fa-share"></i>
+                                Compartir
+                            </button>
+                            <button class="action-btn" onclick="scrollToComments()">
+                                <i class="fas fa-comment"></i>
+                                Comentar
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="gallery-item">
-                    <img src="https://pplx-res.cloudinary.com/image/upload/v1757553426/gemini_images/nrad0yb5ifva9wubdjh6.png" alt="Armonía Universal">
+                <div class="gallery-item" data-post-id="10">
+                    <img src="https://pplx-res.cloudinary.com/image/upload/v1757553426/gemini_images/nrd0yb5ifva9wubdjh6.png" alt="Armonía Universal">
                     <div class="gallery-item-content">
                         <h4>🎵 Armonía Universal</h4>
                         <p>El universo vibra en armonía con nuestro ser cuando elegimos vivir con propósito, amor y respeto hacia toda la creación.</p>
+                        <div class="post-actions">
+                            <button class="action-btn" onclick="toggleLike(10)">
+                                <i class="fas fa-heart"></i>
+                                <span id="likes-10">0</span>
+                            </button>
+                            <button class="action-btn" onclick="sharePost(10)">
+                                <i class="fas fa-share"></i>
+                                Compartir
+                            </button>
+                            <button class="action-btn" onclick="scrollToComments()">
+                                <i class="fas fa-comment"></i>
+                                Comentar
+                            </button>
+                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comments Section -->
+    <section id="comentarios" class="section comments-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-comments"></i> Comentarios de la Comunidad
+            </h2>
+            
+            <div class="comments-container">
+                <!-- Comment Form -->
+                <div class="comment-form">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary);">
+                        <i class="fas fa-pen"></i> Comparte tu Reflexión Espiritual
+                    </h3>
+                    <form id="commentForm">
+                        <input type="text" id="commentAuthor" placeholder="Tu nombre" required maxlength="50">
+                        <textarea id="commentText" placeholder="Escribe tu reflexión sobre estos mensajes espirituales..." required maxlength="500" rows="4"></textarea>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Enviar Comentario
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Comments List -->
+                <div class="comments-list" id="commentsList">
+                    <!-- Comentarios dinámicos aquí -->
                 </div>
             </div>
         </div>
@@ -758,8 +1081,14 @@
                     <button class="admin-nav-btn active" onclick="switchAdminPanel('dashboard')">
                         <i class="fas fa-chart-bar"></i> Dashboard
                     </button>
+                    <button class="admin-nav-btn" onclick="switchAdminPanel('upload')">
+                        <i class="fas fa-upload"></i> Subir Contenido
+                    </button>
                     <button class="admin-nav-btn" onclick="switchAdminPanel('content')">
                         <i class="fas fa-list"></i> Gestionar Contenido
+                    </button>
+                    <button class="admin-nav-btn" onclick="switchAdminPanel('comments')">
+                        <i class="fas fa-comments"></i> Moderar Comentarios
                     </button>
                     <button class="admin-nav-btn" onclick="switchAdminPanel('paypal')">
                         <i class="fab fa-paypal"></i> Configurar PayPal
@@ -785,12 +1114,80 @@
                                 <div>Imágenes Subidas</div>
                             </div>
                             <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
+                                <div style="font-size: 2rem;" id="totalComments">0</div>
+                                <div>Comentarios</div>
+                            </div>
+                            <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
                                 <div style="font-size: 2rem;" id="totalVisits">0</div>
                                 <div>Visitas Totales</div>
                             </div>
                             <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
                                 <div style="font-size: 2rem;" id="paypalStatus">❌</div>
                                 <div>Estado PayPal</div>
+                            </div>
+                            <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
+                                <div style="font-size: 2rem;" id="totalLikes">0</div>
+                                <div>Total Me Gusta</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload Content Panel -->
+                <div id="upload-panel" class="admin-panel">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-upload"></i> Subir Nuevo Contenido</h3>
+                        <div class="upload-container">
+                            <!-- Text Upload -->
+                            <div class="upload-card">
+                                <h4><i class="fas fa-pen-fancy"></i> Nuevo Texto Espiritual</h4>
+                                <form id="adminTextForm">
+                                    <div class="admin-form-group">
+                                        <label for="adminTextTitle">Título del Mensaje</label>
+                                        <input type="text" id="adminTextTitle" placeholder="Título inspirador" required>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label for="adminTextContent">Contenido Espiritual</label>
+                                        <textarea id="adminTextContent" rows="5" placeholder="Comparte el mensaje espiritual..." required></textarea>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label for="adminTextCategory">Categoría</label>
+                                        <select id="adminTextCategory">
+                                            <option value="espiritualidad">✨ Espiritualidad</option>
+                                            <option value="meditacion">🧘 Meditación</option>
+                                            <option value="sabiduria">🌟 Sabiduría</option>
+                                            <option value="reflexion">💭 Reflexión</option>
+                                            <option value="universo">🌌 Universo</option>
+                                            <option value="despertar">⚡ Despertar</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-success" style="background: var(--success); color: white;">
+                                        <i class="fas fa-paper-plane"></i> Publicar Texto
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Image Upload -->
+                            <div class="upload-card">
+                                <h4><i class="fas fa-image"></i> Nueva Imagen Espiritual</h4>
+                                <form id="adminImageForm">
+                                    <div class="admin-form-group">
+                                        <label for="adminImageTitle">Título de la Imagen</label>
+                                        <input type="text" id="adminImageTitle" placeholder="Título descriptivo" required>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label for="adminImageFile">Seleccionar Imagen</label>
+                                        <input type="file" id="adminImageFile" accept="image/*" style="padding: 0.5rem;" required>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label for="adminImageDesc">Mensaje Espiritual</label>
+                                        <textarea id="adminImageDesc" rows="3" placeholder="Describe el mensaje espiritual de la imagen..."></textarea>
+                                    </div>
+                                    <div id="adminImagePreview" class="file-preview"></div>
+                                    <button type="submit" class="btn btn-success" style="background: var(--success); color: white;">
+                                        <i class="fas fa-upload"></i> Subir Imagen
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -799,9 +1196,19 @@
                 <!-- Content Management Panel -->
                 <div id="content-panel" class="admin-panel">
                     <div class="admin-card">
-                        <h3><i class="fas fa-list"></i> Contenido Reciente</h3>
-                        <div id="adminContent">
-                            <p style="text-align: center; opacity: 0.7;">Los mensajes espirituales están integrados en el sitio.</p>
+                        <h3><i class="fas fa-list"></i> Contenido Publicado</h3>
+                        <div id="adminContentList">
+                            <p style="text-align: center; opacity: 0.7;">El contenido se muestra desde el localStorage y las publicaciones actuales del sitio.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comments Moderation Panel -->
+                <div id="comments-panel" class="admin-panel">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-comments"></i> Moderar Comentarios</h3>
+                        <div id="adminCommentsList">
+                            <!-- Comentarios para moderación -->
                         </div>
                     </div>
                 </div>
@@ -826,9 +1233,6 @@
                                 <div class="admin-form-group">
                                     <label for="paypalEmailConfig">Email de PayPal</label>
                                     <input type="email" id="paypalEmailConfig" placeholder="tu-email@paypal.com">
-                                    <small style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">
-                                        Ingresa el email de tu cuenta PayPal para recibir donaciones
-                                    </small>
                                 </div>
 
                                 <div class="admin-form-group">
@@ -844,33 +1248,19 @@
                                 <button type="submit" class="btn btn-success" style="background: var(--success); color: white; padding: 1rem 2rem;">
                                     <i class="fas fa-save"></i> Guardar Configuración PayPal
                                 </button>
-                                <button type="button" onclick="testPayPalConfig()" class="btn btn-warning" style="background: var(--warning); color: white; padding: 1rem 2rem;">
-                                    <i class="fas fa-test-tube"></i> Probar Configuración
-                                </button>
                             </form>
                         </div>
 
                         <div class="admin-card">
-                            <h3><i class="fas fa-info-circle"></i> Instrucciones PayPal Simple</h3>
+                            <h3><i class="fas fa-info-circle"></i> Instrucciones PayPal</h3>
                             <div style="line-height: 2; color: rgba(255,255,255,0.9);">
-                                <h4 style="color: #ffd700; margin-bottom: 1rem;">Para usar PayPal solo con tu email:</h4>
                                 <ol>
-                                    <li>Ingresa tu email de PayPal arriba</li>
-                                    <li>Selecciona la moneda que prefieras</li>
-                                    <li>Activa el toggle de PayPal</li>
+                                    <li>Ingresa tu email de PayPal</li>
+                                    <li>Selecciona la moneda</li>
+                                    <li>Activa el toggle</li>
                                     <li>Guarda la configuración</li>
-                                    <li>¡Los visitantes podrán donar directamente!</li>
+                                    <li>¡Los visitantes podrán donar!</li>
                                 </ol>
-                                
-                                <div style="background: rgba(251, 191, 36, 0.1); padding: 1rem; border-radius: 10px; margin-top: 2rem;">
-                                    <h4 style="color: #ffd700; margin-bottom: 0.5rem;">
-                                        <i class="fas fa-lightbulb"></i> Nota Importante:
-                                    </h4>
-                                    <p style="color: rgba(255,255,255,0.8); margin: 0;">
-                                        Este método usa el sistema de botones estándar de PayPal que no requiere Client ID.
-                                        Los donantes serán redirigidos a PayPal para completar la donación de forma segura.
-                                    </p>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -892,11 +1282,6 @@
                                     <input type="email" id="adminEmail" value="admin@laluzdeluniverso.com">
                                 </div>
 
-                                <div class="admin-form-group">
-                                    <label for="siteDescription">Descripción del Sitio</label>
-                                    <textarea id="siteDescription" rows="3">Un espacio sagrado para el crecimiento espiritual y la conexión con el universo</textarea>
-                                </div>
-
                                 <button type="submit" class="btn btn-success" style="background: var(--success); color: white; padding: 1rem 2rem;">
                                     <i class="fas fa-save"></i> Guardar Configuración
                                 </button>
@@ -914,11 +1299,6 @@
                                 <div class="admin-form-group">
                                     <label for="newPassword">Nueva Contraseña</label>
                                     <input type="password" id="newPassword" placeholder="Nueva contraseña">
-                                </div>
-
-                                <div class="admin-form-group">
-                                    <label for="confirmPassword">Confirmar Contraseña</label>
-                                    <input type="password" id="confirmPassword" placeholder="Confirmar nueva contraseña">
                                 </div>
 
                                 <button type="submit" class="btn btn-warning" style="background: var(--warning); color: white; padding: 1rem 2rem;">
@@ -957,20 +1337,51 @@
     <script>
         // Variables globales
         let selectedDonationAmount = 50;
-        const adminPassword = 'laluz2025'; // Cambia esta contraseña
+        const adminPassword = 'laluz2025';
         let currentPayPalConfig = {
             enabled: false,
             email: 'tu-email@paypal.com',
             currency: 'USD'
         };
 
+        // Datos del sitio
+        let siteData = {
+            likes: {},
+            comments: [],
+            content: {
+                texts: [],
+                images: []
+            }
+        };
+
         // Inicialización
         document.addEventListener('DOMContentLoaded', function() {
+            loadSiteData();
             loadPayPalConfig();
             updateStats();
             setupEventListeners();
             updatePayPalButton();
+            displayComments();
         });
+
+        function loadSiteData() {
+            const saved = localStorage.getItem('siteData');
+            if (saved) {
+                siteData = { ...siteData, ...JSON.parse(saved) };
+            }
+            
+            // Cargar likes
+            for (let i = 1; i <= 10; i++) {
+                const likesElement = document.getElementById(`likes-${i}`);
+                if (likesElement) {
+                    likesElement.textContent = siteData.likes[i] || 0;
+                }
+            }
+        }
+
+        function saveSiteData() {
+            localStorage.setItem('siteData', JSON.stringify(siteData));
+        }
 
         function setupEventListeners() {
             // Form submissions
@@ -978,6 +1389,14 @@
             document.getElementById('paypalConfigForm').addEventListener('submit', handlePayPalConfig);
             document.getElementById('generalConfigForm').addEventListener('submit', handleGeneralConfig);
             document.getElementById('securityForm').addEventListener('submit', handleSecurityConfig);
+            document.getElementById('commentForm').addEventListener('submit', handleCommentSubmit);
+            
+            // Admin forms
+            document.getElementById('adminTextForm').addEventListener('submit', handleAdminTextSubmit);
+            document.getElementById('adminImageForm').addEventListener('submit', handleAdminImageSubmit);
+
+            // Image preview
+            document.getElementById('adminImageFile').addEventListener('change', previewAdminImage);
 
             // Custom donation amount
             document.getElementById('customAmount').addEventListener('input', function() {
@@ -993,14 +1412,275 @@
             });
         }
 
-        // PayPal Configuration Functions
+        // Likes System
+        function toggleLike(postId) {
+            if (!siteData.likes[postId]) {
+                siteData.likes[postId] = 0;
+            }
+            siteData.likes[postId]++;
+            
+            const likesElement = document.getElementById(`likes-${postId}`);
+            if (likesElement) {
+                likesElement.textContent = siteData.likes[postId];
+            }
+
+            const button = event.target.closest('.action-btn');
+            button.classList.add('liked');
+            
+            setTimeout(() => {
+                button.classList.remove('liked');
+            }, 1000);
+
+            saveSiteData();
+            updateStats();
+            showSuccess('¡Me encanta agregado!');
+        }
+
+        // Share System
+        function sharePost(postId) {
+            const postElement = document.querySelector(`[data-post-id="${postId}"]`);
+            const title = postElement.querySelector('h3, h4').textContent;
+            const content = postElement.querySelector('p').textContent;
+            
+            const shareText = `"${content}" - ${title} | La Luz Del Universo`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: shareText,
+                    url: window.location.href
+                }).then(() => {
+                    showSuccess('¡Contenido compartido!');
+                }).catch(() => {
+                    fallbackShare(shareText);
+                });
+            } else {
+                fallbackShare(shareText);
+            }
+        }
+
+        function fallbackShare(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showSuccess('¡Texto copiado al portapapeles!');
+                });
+            } else {
+                alert('Comparte este mensaje: ' + text);
+            }
+        }
+
+        function scrollToComments() {
+            document.getElementById('comentarios').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Comments System
+        function handleCommentSubmit(e) {
+            e.preventDefault();
+            
+            const author = document.getElementById('commentAuthor').value.trim();
+            const text = document.getElementById('commentText').value.trim();
+            
+            if (author && text) {
+                const comment = {
+                    id: Date.now(),
+                    author: author,
+                    text: text,
+                    date: new Date().toLocaleDateString('es-ES'),
+                    likes: 0,
+                    approved: false // Requiere moderación
+                };
+                
+                siteData.comments.push(comment);
+                saveSiteData();
+                
+                document.getElementById('commentForm').reset();
+                displayComments();
+                updateStats();
+                
+                showSuccess('¡Comentario enviado! Será visible después de la moderación.');
+            }
+        }
+
+        function displayComments() {
+            const commentsList = document.getElementById('commentsList');
+            const approvedComments = siteData.comments.filter(comment => comment.approved);
+            
+            if (approvedComments.length === 0) {
+                commentsList.innerHTML = '<div style="text-align: center; padding: 3rem; opacity: 0.7;"><i class="fas fa-comments" style="font-size: 3rem; margin-bottom: 1rem;"></i><p>Sé el primero en compartir una reflexión espiritual.</p></div>';
+                return;
+            }
+            
+            commentsList.innerHTML = approvedComments.map(comment => `
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="comment-author"><i class="fas fa-user-circle"></i> ${comment.author}</span>
+                        <span class="comment-date">${comment.date}</span>
+                    </div>
+                    <div class="comment-text">${comment.text}</div>
+                    <div class="comment-actions">
+                        <button onclick="likeComment(${comment.id})">
+                            <i class="fas fa-heart"></i> ${comment.likes || 0}
+                        </button>
+                        <button onclick="shareComment(${comment.id})">
+                            <i class="fas fa-share"></i> Compartir
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function likeComment(commentId) {
+            const comment = siteData.comments.find(c => c.id === commentId);
+            if (comment) {
+                comment.likes = (comment.likes || 0) + 1;
+                saveSiteData();
+                displayComments();
+                showSuccess('¡Me gusta agregado al comentario!');
+            }
+        }
+
+        function shareComment(commentId) {
+            const comment = siteData.comments.find(c => c.id === commentId);
+            if (comment) {
+                const shareText = `"${comment.text}" - ${comment.author} en La Luz Del Universo`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Reflexión Espiritual',
+                        text: shareText,
+                        url: window.location.href
+                    });
+                } else {
+                    fallbackShare(shareText);
+                }
+            }
+        }
+
+        // Admin Content Management
+        function handleAdminTextSubmit(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('adminTextTitle').value;
+            const content = document.getElementById('adminTextContent').value;
+            const category = document.getElementById('adminTextCategory').value;
+            
+            const textData = {
+                id: Date.now(),
+                title,
+                content,
+                category,
+                type: 'text',
+                date: new Date().toLocaleDateString('es-ES')
+            };
+            
+            siteData.content.texts.push(textData);
+            saveSiteData();
+            
+            showSuccess('¡Texto publicado con éxito!');
+            document.getElementById('adminTextForm').reset();
+            updateStats();
+        }
+
+        function handleAdminImageSubmit(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('adminImageTitle').value;
+            const desc = document.getElementById('adminImageDesc').value;
+            const fileInput = document.getElementById('adminImageFile');
+            
+            if (fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageData = {
+                        id: Date.now(),
+                        title,
+                        description: desc,
+                        url: e.target.result,
+                        type: 'image',
+                        date: new Date().toLocaleDateString('es-ES')
+                    };
+                    
+                    siteData.content.images.push(imageData);
+                    saveSiteData();
+                    
+                    showSuccess('¡Imagen subida con éxito!');
+                    document.getElementById('adminImageForm').reset();
+                    document.getElementById('adminImagePreview').innerHTML = '';
+                    updateStats();
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        function previewAdminImage() {
+            const file = document.getElementById('adminImageFile').files[0];
+            const preview = document.getElementById('adminImagePreview');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" style="max-width: 200px; border-radius: 15px;">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Admin Comment Moderation
+        function loadAdminComments() {
+            const adminCommentsList = document.getElementById('adminCommentsList');
+            const pendingComments = siteData.comments.filter(comment => !comment.approved);
+            
+            if (pendingComments.length === 0) {
+                adminCommentsList.innerHTML = '<p style="text-align: center; opacity: 0.7;">No hay comentarios pendientes de moderación.</p>';
+                return;
+            }
+            
+            adminCommentsList.innerHTML = pendingComments.map(comment => `
+                <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <strong>${comment.author}</strong>
+                        <small>${comment.date}</small>
+                    </div>
+                    <p style="margin-bottom: 1rem;">${comment.text}</p>
+                    <div style="display: flex; gap: 1rem;">
+                        <button onclick="approveComment(${comment.id})" class="btn" style="background: var(--success); color: white; padding: 0.5rem 1rem;">
+                            <i class="fas fa-check"></i> Aprobar
+                        </button>
+                        <button onclick="rejectComment(${comment.id})" class="btn" style="background: var(--danger); color: white; padding: 0.5rem 1rem;">
+                            <i class="fas fa-times"></i> Rechazar
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function approveComment(commentId) {
+            const comment = siteData.comments.find(c => c.id === commentId);
+            if (comment) {
+                comment.approved = true;
+                saveSiteData();
+                displayComments();
+                loadAdminComments();
+                updateStats();
+                showSuccess('Comentario aprobado');
+            }
+        }
+
+        function rejectComment(commentId) {
+            siteData.comments = siteData.comments.filter(c => c.id !== commentId);
+            saveSiteData();
+            loadAdminComments();
+            updateStats();
+            showSuccess('Comentario rechazado');
+        }
+
+        // PayPal Configuration
         function loadPayPalConfig() {
             const saved = localStorage.getItem('paypalConfig');
             if (saved) {
                 currentPayPalConfig = { ...currentPayPalConfig, ...JSON.parse(saved) };
             }
             
-            // Update form fields
             document.getElementById('paypalEnabled').checked = currentPayPalConfig.enabled;
             document.getElementById('paypalEmailConfig').value = currentPayPalConfig.email;
             document.getElementById('paypalCurrencyConfig').value = currentPayPalConfig.currency;
@@ -1022,11 +1702,6 @@
                 return;
             }
 
-            if (config.email && !isValidEmail(config.email)) {
-                showError('Por favor ingresa un email válido');
-                return;
-            }
-
             currentPayPalConfig = config;
             localStorage.setItem('paypalConfig', JSON.stringify(config));
             
@@ -1035,10 +1710,6 @@
             updateStats();
             
             showSuccess('Configuración de PayPal guardada correctamente');
-        }
-
-        function isValidEmail(email) {
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
 
         function updatePayPalStatus() {
@@ -1059,45 +1730,17 @@
         }
 
         function updatePayPalButton() {
-            const container = document.getElementById('paypal-donate-container');
-            
-            if (!currentPayPalConfig.enabled || !currentPayPalConfig.email) {
-                container.innerHTML = `
-                    <p style="background: rgba(239, 68, 68, 0.2); color: var(--danger); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
-                        <i class="fas fa-exclamation-triangle"></i> PayPal no está configurado. Ve al panel de administración para agregar tu email de PayPal.
-                    </p>
-                `;
-                return;
+            if (currentPayPalConfig.enabled && currentPayPalConfig.email) {
+                document.getElementById('paypalEmail').value = currentPayPalConfig.email;
+                document.getElementById('paypalCurrency').value = currentPayPalConfig.currency;
+                document.getElementById('paypalAmount').value = selectedDonationAmount;
+                document.getElementById('donationDisplay').textContent = selectedDonationAmount;
             }
-
-            // Update form values
-            document.getElementById('paypalEmail').value = currentPayPalConfig.email;
-            document.getElementById('paypalCurrency').value = currentPayPalConfig.currency;
-            document.getElementById('paypalAmount').value = selectedDonationAmount;
-            document.getElementById('donationDisplay').textContent = selectedDonationAmount;
-
-            // Update button text
-            const button = document.querySelector('.paypal-button');
-            if (button) {
-                button.innerHTML = `
-                    <i class="fab fa-paypal"></i> Donar $${selectedDonationAmount} ${currentPayPalConfig.currency} con PayPal
-                `;
-            }
-        }
-
-        function testPayPalConfig() {
-            if (!currentPayPalConfig.email) {
-                showError('Ingresa un email de PayPal para probar');
-                return;
-            }
-
-            showSuccess('✅ Configuración válida. Los usuarios pueden donar a ' + currentPayPalConfig.email);
         }
 
         function selectAmount(amount) {
             selectedDonationAmount = amount;
             
-            // Update active button
             document.querySelectorAll('.amount-btn').forEach(btn => btn.classList.remove('active'));
             const buttons = document.querySelectorAll('.amount-btn');
             buttons.forEach(btn => {
@@ -1106,29 +1749,33 @@
                 }
             });
             
-            // Update PayPal form
-            document.getElementById('paypalAmount').value = amount;
-            document.getElementById('donationDisplay').textContent = amount;
-            
-            // Update button text
             updatePayPalButton();
         }
 
         // Admin Panel Functions
         function switchAdminPanel(panelName) {
-            // Update nav buttons
             document.querySelectorAll('.admin-nav-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
-            // Show selected panel
             document.querySelectorAll('.admin-panel').forEach(panel => panel.classList.remove('active'));
             document.getElementById(panelName + '-panel').classList.add('active');
+            
+            if (panelName === 'comments') {
+                loadAdminComments();
+            }
         }
 
         function updateStats() {
             const visits = parseInt(localStorage.getItem('visits') || '0') + 1;
             localStorage.setItem('visits', visits.toString());
+            
+            const totalLikes = Object.values(siteData.likes).reduce((sum, likes) => sum + likes, 0);
+            const approvedComments = siteData.comments.filter(c => c.approved).length;
+            
             document.getElementById('totalVisits').textContent = visits;
+            document.getElementById('totalComments').textContent = approvedComments;
+            document.getElementById('totalLikes').textContent = totalLikes;
+            
             updatePayPalStatus();
         }
 
@@ -1174,15 +1821,9 @@
             e.preventDefault();
             const current = document.getElementById('currentPassword').value;
             const newPass = document.getElementById('newPassword').value;
-            const confirm = document.getElementById('confirmPassword').value;
 
             if (current !== adminPassword) {
                 showError('Contraseña actual incorrecta');
-                return;
-            }
-
-            if (newPass !== confirm) {
-                showError('Las contraseñas no coinciden');
                 return;
             }
 
