@@ -73,12 +73,16 @@
             gap: 0.5rem;
         }
 
-        .logo i {
-            font-size: 2.5rem;
-            background: var(--secondary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .logo img {
+            width: 32px;
+            height: 32px;
+            filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.8));
+            transition: all 0.3s ease;
             animation: pulse 2s infinite;
+        }
+
+        .logo img:hover {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .nav-links {
@@ -140,6 +144,15 @@
             animation: fadeInUp 1s ease-out;
         }
 
+        .hero h1 img {
+            width: 48px;
+            height: 48px;
+            vertical-align: middle;
+            margin-right: 12px;
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.8));
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
         .hero p {
             font-size: 1.3rem;
             margin-bottom: 2rem;
@@ -166,9 +179,19 @@
             color: white;
         }
 
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.2);
+        }
+
         .btn-secondary {
             background: var(--gold);
             color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.2);
         }
 
         .btn-success {
@@ -184,11 +207,6 @@
         .btn-danger {
             background: var(--danger);
             color: white;
-        }
-
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 80px rgba(0,0,0,0.2);
         }
 
         /* Secciones con colores vibrantes */
@@ -371,7 +389,7 @@
         .admin-nav {
             display: flex;
             gap: 2rem;
-            margin-bottom: 2rem;
+            margin-top: 2rem;
             flex-wrap: wrap;
         }
 
@@ -412,6 +430,7 @@
             border-radius: var(--radius);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 2rem;
         }
 
         .content-grid {
@@ -431,14 +450,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-        }
-
-        .config-card {
-            background: rgba(255,255,255,0.1);
-            padding: 2rem;
-            border-radius: var(--radius);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .admin-form-group {
@@ -462,14 +473,6 @@
             background: rgba(255,255,255,0.1);
             color: white;
             font-size: 1rem;
-        }
-
-        .admin-form-group input:focus,
-        .admin-form-group select:focus,
-        .admin-form-group textarea:focus {
-            outline: none;
-            border-color: rgba(255,255,255,0.8);
-            background: rgba(255,255,255,0.2);
         }
 
         .toggle-switch {
@@ -515,26 +518,6 @@
 
         input:checked + .slider:before {
             transform: translateX(26px);
-        }
-
-        .status-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .status-active {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
-        }
-
-        .status-inactive {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--danger);
         }
 
         .modal {
@@ -608,7 +591,13 @@
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(5deg); }
+            75% { transform: scale(0.95) rotate(-3deg); }
         }
 
         @keyframes twinkle {
@@ -639,7 +628,7 @@
     <header class="header">
         <nav class="nav container">
             <div class="logo">
-                <i class="fas fa-star"></i>
+                <img src="https://pplx-res.cloudinary.com/image/upload/v1757549037/gemini_images/gk0jj0cj8gyixxfhjphb.png" alt="Logo Universo">
                 La Luz Del Universo
             </div>
             <ul class="nav-links">
@@ -655,7 +644,7 @@
     <!-- Hero Section -->
     <section id="inicio" class="hero">
         <div class="hero-content">
-            <h1><i class="fas fa-star"></i> La Luz Del Universo</h1>
+            <h1><img src="https://pplx-res.cloudinary.com/image/upload/v1757549037/gemini_images/gk0jj0cj8gyixxfhjphb.png" alt="Logo Universo"> La Luz Del Universo</h1>
             <p>Un espacio sagrado para el crecimiento espiritual y la conexión con el universo</p>
             <a href="#subir" class="btn btn-primary">
                 <i class="fas fa-upload"></i> Compartir Contenido
@@ -787,7 +776,7 @@
             <div class="admin-header">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h2 class="section-title" style="color: white; margin-bottom: 0;">
-                        <i class="fas fa-crown"></i> Panel de Administración
+                        <img src="https://pplx-res.cloudinary.com/image/upload/v1757549037/gemini_images/gk0jj0cj8gyixxfhjphb.png" alt="Logo Universo" style="width: 36px; height: 36px; vertical-align: middle; margin-right: 10px;"> Panel de Administración
                     </h2>
                     <button onclick="hideAdmin()" class="btn btn-danger">
                         <i class="fas fa-times"></i> Cerrar Panel
@@ -850,7 +839,7 @@
                 <!-- PayPal Configuration Panel -->
                 <div id="paypal-panel" class="admin-panel">
                     <div class="config-grid">
-                        <div class="config-card">
+                        <div class="admin-card">
                             <h3><i class="fab fa-paypal"></i> Configuración PayPal</h3>
                             <form id="paypalConfigForm">
                                 <div class="admin-form-group">
@@ -859,14 +848,14 @@
                                         <input type="checkbox" id="paypalEnabled">
                                         <span class="slider"></span>
                                     </label>
-                                    <div id="paypalStatusText" class="status-indicator status-inactive" style="margin-top: 1rem;">
+                                    <div id="paypalStatusText" style="margin-top: 1rem; padding: 0.5rem; border-radius: 5px; background: rgba(239, 68, 68, 0.2); color: var(--danger);">
                                         <i class="fas fa-times-circle"></i> Desactivado
                                     </div>
                                 </div>
 
                                 <div class="admin-form-group">
                                     <label for="paypalClientId">Client ID de PayPal</label>
-                                    <input type="text" id="paypalClientId" placeholder="Tu Client ID de PayPal" value="">
+                                    <input type="text" id="paypalClientId" placeholder="Tu Client ID de PayPal">
                                     <small style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">
                                         Obtén tu Client ID desde <a href="https://developer.paypal.com" target="_blank" style="color: #fbbf24;">developer.paypal.com</a>
                                     </small>
@@ -890,11 +879,6 @@
                                     </select>
                                 </div>
 
-                                <div class="admin-form-group">
-                                    <label for="paypalBusinessEmail">Email de Negocio PayPal</label>
-                                    <input type="email" id="paypalBusinessEmail" placeholder="tu-email@ejemplo.com" value="">
-                                </div>
-
                                 <button type="submit" class="btn btn-success">
                                     <i class="fas fa-save"></i> Guardar Configuración PayPal
                                 </button>
@@ -904,7 +888,7 @@
                             </form>
                         </div>
 
-                        <div class="config-card">
+                        <div class="admin-card">
                             <h3><i class="fas fa-info-circle"></i> Instrucciones PayPal</h3>
                             <ol style="line-height: 2; color: rgba(255,255,255,0.9);">
                                 <li>Ve a <a href="https://developer.paypal.com" target="_blank" style="color: #fbbf24;">developer.paypal.com</a></li>
@@ -916,17 +900,6 @@
                                 <li>Guarda la configuración</li>
                                 <li>¡Activa PayPal y prueba!</li>
                             </ol>
-
-                            <div style="background: rgba(251, 191, 36, 0.1); padding: 1rem; border-radius: 10px; margin-top: 2rem;">
-                                <h4 style="color: #fbbf24; margin-bottom: 0.5rem;">
-                                    <i class="fas fa-lightbulb"></i> Consejos:
-                                </h4>
-                                <ul style="color: rgba(255,255,255,0.8); line-height: 1.8;">
-                                    <li>Usa Sandbox para probar sin dinero real</li>
-                                    <li>Cambia a Live cuando esté todo listo</li>
-                                    <li>El Client ID es público, es seguro</li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -934,7 +907,7 @@
                 <!-- Settings Panel -->
                 <div id="settings-panel" class="admin-panel">
                     <div class="config-grid">
-                        <div class="config-card">
+                        <div class="admin-card">
                             <h3><i class="fas fa-cog"></i> Configuración General</h3>
                             <form id="generalConfigForm">
                                 <div class="admin-form-group">
@@ -958,8 +931,8 @@
                             </form>
                         </div>
 
-                        <div class="config-card">
-                            <h3><i class="fas fa-key"></i> Seguridad</h3>
+                        <div class="admin-card">
+                            <h3><i class="fas fa-key"></i> Cambiar Contraseña</h3>
                             <form id="securityForm">
                                 <div class="admin-form-group">
                                     <label for="currentPassword">Contraseña Actual</label>
@@ -1018,8 +991,7 @@
             enabled: false,
             clientId: '',
             mode: 'sandbox',
-            currency: 'USD',
-            businessEmail: ''
+            currency: 'USD'
         };
 
         // Inicialización
@@ -1066,7 +1038,6 @@
             document.getElementById('paypalClientId').value = currentPayPalConfig.clientId;
             document.getElementById('paypalMode').value = currentPayPalConfig.mode;
             document.getElementById('paypalCurrency').value = currentPayPalConfig.currency;
-            document.getElementById('paypalBusinessEmail').value = currentPayPalConfig.businessEmail;
             
             updatePayPalStatus();
         }
@@ -1078,8 +1049,7 @@
                 enabled: document.getElementById('paypalEnabled').checked,
                 clientId: document.getElementById('paypalClientId').value.trim(),
                 mode: document.getElementById('paypalMode').value,
-                currency: document.getElementById('paypalCurrency').value,
-                businessEmail: document.getElementById('paypalBusinessEmail').value.trim()
+                currency: document.getElementById('paypalCurrency').value
             };
 
             if (config.enabled && !config.clientId) {
@@ -1102,11 +1072,13 @@
             const dashboardStatus = document.getElementById('paypalStatus');
             
             if (currentPayPalConfig.enabled && currentPayPalConfig.clientId) {
-                statusElement.className = 'status-indicator status-active';
+                statusElement.style.background = 'rgba(16, 185, 129, 0.2)';
+                statusElement.style.color = 'var(--success)';
                 statusElement.innerHTML = '<i class="fas fa-check-circle"></i> Activado (' + currentPayPalConfig.mode + ')';
                 dashboardStatus.textContent = '✅';
             } else {
-                statusElement.className = 'status-indicator status-inactive';
+                statusElement.style.background = 'rgba(239, 68, 68, 0.2)';
+                statusElement.style.color = 'var(--danger)';
                 statusElement.innerHTML = '<i class="fas fa-times-circle"></i> Desactivado';
                 dashboardStatus.textContent = '❌';
             }
